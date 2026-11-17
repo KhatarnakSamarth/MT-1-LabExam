@@ -63,7 +63,15 @@ app.post('/vehicles', (req, res) => {
 
 
 app.put('/vehicles/:id', (req, res) => {
-    const id = parseInt(req.params.id);
+
+    const id = Number(req.params.id)
+
+    if (!Number.isInteger(id) || id <= 0) {
+        return res.status(400).json({
+            message: "Invalid vehicle ID"
+        })
+    }
+
     const index = vehicles.findIndex((v) => v.id === id);
     if (index === -1) {
         return res.status(404).json({

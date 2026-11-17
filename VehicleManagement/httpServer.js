@@ -1,10 +1,44 @@
 import http from 'http'
 import fs from 'fs'
 
+
+let vehicles = [
+    {
+        id: 1,
+        vehicleName: "Hyundai Creta",
+        vehicleNumber: "HR26AB1234",
+        type: "SUV",
+        price: 1500000
+    },
+    {
+        id: 2,
+        vehicleName: "Toyota Fortuner",
+        vehicleNumber: "UP16CD5678",
+        type: "SUV",
+        price: 4200000
+    },
+    {
+        id: 3,
+        vehicleName: "Honda City",
+        vehicleNumber: "DL8CAF9012",
+        type: "Sedan",
+        price: 1200000
+    }
+]
+
+
 const server = http.createServer((req, res) => {
     switch (req.url) {
         case '/':
-            res.end("Welcome page in HTML format")
+            res.setHeader("Content-Type", "text/html");
+            fs.readFile("./public/home.html", "utf8", (err, data) => {
+                if (err) {
+                    res.statusCode = 500
+                    res.end("Error 500")
+                } else {
+                    res.end(data)
+                }
+            })
             break
         case '/about':
             res.setHeader("Content-Type", "text/html");
@@ -83,5 +117,5 @@ const server = http.createServer((req, res) => {
 })
 
 server.listen(3000, () => {
-    console.log("Server started Successfully at Port: 3000")
+    console.log("HTTP Server running at http://localhost:3000")
 })

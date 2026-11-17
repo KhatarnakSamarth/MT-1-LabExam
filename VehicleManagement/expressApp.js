@@ -28,7 +28,7 @@ let vehicles = [{
 ];
 
 
-app.get('/vehicles', (req, res)=>{
+app.get('/vehicles', (req, res) => {
     res.json(vehicles)
 })
 
@@ -80,7 +80,20 @@ app.put('/vehicles/:id', (req, res) => {
 })
 
 
-
+app.delete('/vehicles/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    const index = vehicles.findIndex((v) => v.id === id)
+    if (index === -1) {
+        return res.status(404).json({
+            message: "Vehicle not found"
+        })
+    }
+    const deletedVehicle = vehicles.splice(index, 1)
+    res.json({
+        message: "Vehicle deleted successfully",
+        vehicle: deletedVehicle[0]
+    })
+})
 
 
 

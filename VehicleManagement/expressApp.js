@@ -28,6 +28,19 @@ let vehicles = [{
 ];
 
 
+app.get('/vehicles', (req, res)=>{
+    res.json(vehicles)
+})
+
+
+
+
+
+
+
+
+
+
 app.listen(4000, () => {
     console.log(`Express Server started at Port: 4000`);
 });

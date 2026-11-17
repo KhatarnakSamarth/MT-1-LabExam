@@ -21,9 +21,30 @@ const server = http.createServer((req, res) => {
             })
             break
         case '/vehicles':
-            res.end("List of all vehicle records in JSON format")
+            if (req.method === 'GET') {
+                res.writeHead(200, { "Content-Type": "application/json" })
+                res.end(JSON.stringify(vehicles))
+            }
+            break
+        case '/add-vehicle':
+            if (req.method === 'POST') {
+                let body = ''
+                req.on('data', (chunk) => {
+                    body += chunk.toString()
+                })
+                req.on('end', () => {
+                    const newVehicle = JSON.parse(body)
+                    vehicles.push(newVehicle)
+                    res.writeHead(201, { "Content-Type": "application/json" })
+                    res.end(JSON.stringify({
+                        message: "Vehicle added successfully",
+                        vehicle: newVehicle
+                    }))
+                })
+            }
             break
         default:
+            res.statusCode = 404
             res.end("404 Not Found")
             break
     }

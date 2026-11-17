@@ -42,8 +42,8 @@ app.get('/vehicles/:id', (req, res) => {
         });
     }
 
-    res.json(vehicle);
-});
+    res.json(vehicle)
+})
 
 
 app.post('/vehicles', (req, res) => {
@@ -57,8 +57,32 @@ app.post('/vehicles', (req, res) => {
     res.status(201).json({
         message: "Vehicle added successfully",
         vehicle: newVehicle
-    });
-});
+    })
+})
+
+
+app.put('/vehicles/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    const index = vehicles.findIndex((v) => v.id === id);
+    if (index === -1) {
+        return res.status(404).json({
+            message: "Vehicle not found"
+        });
+    }
+    vehicles[index] = {
+        id: id,
+        ...req.body
+    }
+    res.json({
+        message: "Vehicle updated successfully",
+        vehicle: vehicles[index]
+    })
+})
+
+
+
+
+
 
 
 

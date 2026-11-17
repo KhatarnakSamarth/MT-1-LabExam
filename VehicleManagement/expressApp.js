@@ -41,10 +41,24 @@ app.get('/vehicles/:id', (req, res) => {
             message: "Vehicle not found"
         });
     }
-    
+
     res.json(vehicle);
 });
 
+
+app.post('/vehicles', (req, res) => {
+    const newVehicle = {
+        id: vehicles.length + 1,
+        ...req.body
+    };
+
+    vehicles.push(newVehicle);
+
+    res.status(201).json({
+        message: "Vehicle added successfully",
+        vehicle: newVehicle
+    });
+});
 
 
 
